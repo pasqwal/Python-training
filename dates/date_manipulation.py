@@ -8,5 +8,10 @@ Module de gestion de dates
 """
 
 from datetime import datetime
+import calendar
+
+calendar.mdays # combien de jour par mois ?
+calendar.isleap(2000) # année bissextile ?
+
 
 maintenant = datetime.now()
