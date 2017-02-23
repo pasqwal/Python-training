@@ -6,3 +6,7 @@ Module de gestion de dates
 
 
 """
+
+from datetime import datetime
+
+maintenant = datetime.now()
