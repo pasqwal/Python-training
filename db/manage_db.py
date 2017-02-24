@@ -22,12 +22,10 @@ class CreateDb:
 
     def createTable(self, tablename='test', liste_champs=['champ_test']):
         str_liste_champs=",".join(liste_champs)
-        print(SQL_CREATE.format(table=tablename, fields=str_liste_champs))
         self.cursor.execute(SQL_CREATE.format(table=tablename, fields=str_liste_champs))
 
     def insertIntoTable(self, tablename='test', values=[('record1',)]):
         str_nb_champs = ','.join('?'*len(values[0]))
-        print(SQL_INSERT.format(table=tablename, values=str_nb_champs))
         self.cursor.executemany(SQL_INSERT.format(table=tablename, values=str_nb_champs), values)
 
     def getDataFromTable(self, tablename='test'):
@@ -46,6 +44,7 @@ class CreateDb:
 
 if __name__ == "__main__":
     try:
+        # usage with default values
         db = CreateDb()
         db.createTable()
         db.insertIntoTable()
@@ -53,9 +52,9 @@ if __name__ == "__main__":
         records.append(('record2',))
         records.append(('record3',))
         db.insertIntoTable('test', records)
-
         db.printDataFromTable()
 
+        # Usage with user-defined values
         db.createTable('client',('nom', 'prenom'))
         records = []
         records.append(('Jon','Doe'))
