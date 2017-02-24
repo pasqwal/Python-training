@@ -21,13 +21,14 @@ class CreateDb:
         self.cursor = self._connection.cursor()
 
     def createTable(self, tablename='test', liste_champs=['champ_test']):
-        print(SQL_CREATE.format(table=tablename, fields=liste_champs))
-        self.cursor.execute(SQL_CREATE.format(table=tablename, fields=liste_champs))
+        str_liste_champs=",".join(liste_champs)
+        print(SQL_CREATE.format(table=tablename, fields=str_liste_champs))
+        self.cursor.execute(SQL_CREATE.format(table=tablename, fields=str_liste_champs))
 
     def insertIntoTable(self, tablename='test', values=[('record1',)]):
-        format_nb_champs = ','.join('?'*len(values[0]))
-        print(SQL_INSERT.format(table=tablename, values=format_nb_champs))
-        self.cursor.executemany(SQL_INSERT.format(table=tablename, values=format_nb_champs), values)
+        str_nb_champs = ','.join('?'*len(values[0]))
+        print(SQL_INSERT.format(table=tablename, values=str_nb_champs))
+        self.cursor.executemany(SQL_INSERT.format(table=tablename, values=str_nb_champs), values)
 
     def getDataFromTable(self, tablename='test'):
         self.cursor.execute("SELECT * FROM {}".format(tablename))
@@ -36,7 +37,7 @@ class CreateDb:
 
     def printDataFromTable(self, tablename='test'):
         for row in db.getDataFromTable(tablename):
-            print([field for field in row])
+            print(",".join(row))
 
 
 
@@ -60,5 +61,6 @@ if __name__ == "__main__":
         records.append(('Jon','Doe'))
         records.append(('Jane', 'Jane'))
         db.insertIntoTable('client', records)
+        db.printDataFromTable('client')
     finally:
         db.close()
