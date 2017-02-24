@@ -37,10 +37,9 @@ class CreateDb:
         for row in db.getDataFromTable(tablename):
             print(",".join(row))
 
-
-
     def close(self):
         self._connection.close()
+
 
 if __name__ == "__main__":
     try:
